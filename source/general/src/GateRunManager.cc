@@ -32,6 +32,11 @@
 #include "G4EmLivermorePhysics.hh"
 #include "G4EmPenelopePhysics.hh"
 #include "G4EmDNAPhysics.hh"
+
+#ifdef GATE_USE_OPTICAL
+#include "G4OpticalPhysics.hh"
+#endif
+
 #include "G4StepLimiterPhysics.hh"
 
 //----------------------------------------------------------------------------------------
@@ -168,6 +173,10 @@ void GateRunManager::InitializeAll() {
                               << GatePhysicsList::GetInstance()->GetListOfPhysicsLists());
         }
 
+#ifdef GATE_USE_OPTICAL
+        G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
+        mUserPhysicList->RegisterPhysics(opticalPhysics);
+#endif
         // There are two phys list :
         // - GatePhysicsList::GetInstance() is the one of Gate
         // - mUserPhysicList : the one created by G4 if user choose a buildin PL.
